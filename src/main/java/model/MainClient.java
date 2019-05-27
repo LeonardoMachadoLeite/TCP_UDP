@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-public class Main {
+public class MainClient {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
