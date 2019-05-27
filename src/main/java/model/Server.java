@@ -24,10 +24,16 @@ public class Server implements Closeable, Runnable {
         this.protocol = protocol;
     }
 
-    public Server(int portNumber) throws IOException {
+    public Server(int portNumber, Protocol protocol) throws IOException {
 
         this.serverSocket = new ServerSocket(portNumber);
+        this.protocol = protocol;
 
+        this.serverSocket = new ServerSocket(portNumber, 1);
+
+        InetAddress inet = serverSocket.getInetAddress();
+        System.out.println("HostAddress = " + inet.getHostAddress());
+        System.out.println("HostName = " + inet.getHostName());
     }
 
     public void setIDLE() throws IOException {
@@ -39,7 +45,7 @@ public class Server implements Closeable, Runnable {
         protocol.startConnection(
                 serverSocket.getInetAddress().getHostAddress(),
                 serverSocket.getLocalPort(),
-                clientSocket.getLocalAddress().getHostAddress(),
+                clientSocket.getInetAddress().getHostAddress(),
                 clientSocket.getPort(),
                 0, null);
 

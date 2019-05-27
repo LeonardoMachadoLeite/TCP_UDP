@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Client implements Runnable{
 
-    Socket socket;
-    Protocol protocol;
+    private Socket socket;
+    private Protocol protocol;
 
     public Client(InetAddress address, int port, InetAddress localAddr, int localPort, Protocol protocol) throws IOException {
 
