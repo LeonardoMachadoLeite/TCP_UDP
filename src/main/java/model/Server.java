@@ -47,7 +47,7 @@ public class Server implements Closeable, Runnable {
                 serverSocket.getLocalPort(),
                 clientSocket.getInetAddress().getHostAddress(),
                 clientSocket.getPort(),
-                0, null);
+                0);
 
         System.out.println("The server has connected to client");
     }
