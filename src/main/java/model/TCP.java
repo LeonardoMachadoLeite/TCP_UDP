@@ -31,7 +31,7 @@ public class TCP implements Protocol{
 
     }
 
-    public void setData(String options, Object data) throws IOException {
+    public void setData(Object data, String options) throws IOException {
         this.options = options;
         this.data = data;
         File f = new File("data.txt");

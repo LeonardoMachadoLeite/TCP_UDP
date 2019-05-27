@@ -17,11 +17,11 @@ public class Main {
 
         server.start();
 
-        Thread client = new Thread(new Client(
+/*        Thread client = new Thread(new Client(
                 serverAddress.getAddress(),serverPort,
                 clientAddress.getAddress(),clientPort, new TCP()));
 
-        client.start();
+        client.start();*/
 
         server.join();
 

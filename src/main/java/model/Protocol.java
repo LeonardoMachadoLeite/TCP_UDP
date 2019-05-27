@@ -8,7 +8,7 @@ public interface Protocol extends Serializable {
     public void startConnection(String sourceIp, int sourcePort, String destinationIp, int destinationPort,
                                 int tcpLength, Byte[] checkSum);
     public Object getData();
-    public void setData(String options, Object data) throws IOException ;
+    public void setData(Object data, String options) throws IOException ;
     public void close();
 
 }

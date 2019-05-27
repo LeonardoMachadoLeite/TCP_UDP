@@ -17,7 +17,7 @@ public class UDP implements Protocol{
         return data;
     }
 
-    public void setData(String options, Object data) throws IOException {
+    public void setData(Object data, String options) throws IOException {
 
         this.data = data;
 
