@@ -4,11 +4,11 @@ import java.io.*;
 
 public class Cabecalho implements Serializable {
 
-    private String sourceIp;
-    private int sourcePort;
-    private String destinationIp;
-    private int destinationPort;
-    private int tcpLength;
+    protected String sourceIp;
+    protected int sourcePort;
+    protected String destinationIp;
+    protected int destinationPort;
+    protected int tcpLength;
 
     public Cabecalho(String sourceIp, int sourcePort, String destinationIp, int destinationPort, int tcpLength) {
         this.sourceIp = sourceIp;
@@ -37,7 +37,7 @@ public class Cabecalho implements Serializable {
                 tcpLength);
     }
 
-    private String toStringAddress(String ip, int port) {
+    protected String toStringAddress(String ip, int port) {
         return String.format("{ " +
                 "ip : \"%s\", " +
                 "port : %d" +
