@@ -18,7 +18,7 @@ public class TCP implements Protocol{
     public TCP() {}
 
     public void startConnection(String sourceIp, int sourcePort, String destinationIp, int destinationPort,
-                                int tcpLength, Byte[] checkSum){
+                                int tcpLength){
         this.cabecalho = new Cabecalho(sourceIp, sourcePort, destinationIp, destinationPort, tcpLength);
     }
 
@@ -34,20 +34,33 @@ public class TCP implements Protocol{
     public void setData(Object data, String options) throws IOException {
         this.options = options;
         this.data = data;
-        File f = new File("data.txt");
-        FileOutputStream fOut = new FileOutputStream(f);
-        ObjectOutputStream out = new ObjectOutputStream(fOut);
-        out.writeObject(options);
-        out.writeObject(data);
-        out.flush();
-        checksum = MD5.getHash(f);
+        setHash();
     }
+
+    public String checksumToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        boolean first = true;
+        for (byte b : checksum) {
+            if (first) {
+                builder.append(b);
+                first = false;
+            } else {
+                builder.append(", ");
+                builder.append(b);
+            }
+        }
+        builder.append("]");
+        return builder.toString();
+    }
+
 
     public String toString() {
         return String.format("{ " +
                 "cabecalho : %s, " +
                 "seq_number : %d, " +
                 "ack : %d, " +
+                "checksum : %s, " +
                 "max_len : %d, " +
                 "options : %s, " +
                 "data : %s" +
@@ -55,6 +68,7 @@ public class TCP implements Protocol{
                 toJson(cabecalho),
                 seqNumber,
                 ack,
+                checksumToString(),
                 maxLength,
                 jsonString(options),
                 toJson(data));
@@ -66,6 +80,17 @@ public class TCP implements Protocol{
 
     private String toJson(Object o) {
         return o == null ? "null" : o.toString();
+    }
+
+    private void setHash() throws IOException {
+
+        File f = new File("msg.txt");
+        FileWriter writer = new FileWriter(f);
+        writer.append(this.toString());
+        writer.flush();
+        writer.close();
+        checksum = MD5.getHash(f);
+
     }
 
 }
