@@ -54,11 +54,13 @@ public class Server implements Closeable, Runnable {
 
     public void sendData() throws IOException {
 
-        protocol.setData("Options", "Hello World!");
+        protocol.setData("Hello World!", "{}");
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+        out.writeChars(protocol.toString());
 
         PrintStream printStream = new PrintStream(clientSocket.getOutputStream());
         //System.out.println("Server : " + protocol);
-        printStream.println("Server(printStream): " + protocol);
+        //printStream.println("Server(printStream): " + protocol);
 
     }
 
@@ -86,16 +88,13 @@ public class Server implements Closeable, Runnable {
 
             this.sendData();
 
-/*            Scanner s = new Scanner(clientSocket.getInputStream());
-            while (s.hasNextLine()) {
-                String line = s.nextLine();
-                System.out.println("Server(echo): " + line);
-                if (line.equalsIgnoreCase("quit")) {
-                    break;
-                }
-            }*/
+            Scanner in = new Scanner(clientSocket.getInputStream());
+            ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());
+            while (true) {
+                System.out.println(input.readUTF());
+            }
 
-            this.close();
+            //this.close();
         } catch (IOException e) {
             System.err.println("Error on the server side");
             e.printStackTrace();
