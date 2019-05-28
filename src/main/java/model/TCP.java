@@ -3,7 +3,6 @@ package model;
 import java.io.*;
 
 import com.twmacinta.util.MD5;
-import com.twmacinta.util.MD5InputStream;
 
 public class TCP implements Protocol{
 
