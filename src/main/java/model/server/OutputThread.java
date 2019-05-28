@@ -3,32 +3,57 @@ package model.server;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OutputThread extends Thread{
 
-    private ServerConnection serverConnection;
+    private TCPServerConnection connection;
     private DataOutputStream out;
-    private boolean open = true;
+    private AtomicBoolean open = new AtomicBoolean(true);
+    private Queue<String> sendQueue;
 
-    public OutputThread(ServerConnection serverConnection, OutputStream outputStream) {
-        this.serverConnection = serverConnection;
+    public OutputThread(TCPServerConnection connection, OutputStream outputStream) {
+        this.connection = connection;
         this.out = new DataOutputStream(outputStream);
+        this.sendQueue = new ConcurrentLinkedQueue<String>();
     }
 
     public void run() {
 
-        while (open) {
+        String msg;
 
-            try {
+        while (open.get()) {
 
-                out.writeChars("");
+            if (!sendQueue.isEmpty()) {
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                msg = sendQueue.poll();
+
+                try {
+
+                    out.writeChars(msg);
+
+                } catch (IOException e) {
+                    System.err.println("Error sending: " + msg);
+                    System.err.println("Will try to send again");
+                    sendQueue.add(msg);
+                }
+
             }
-
         }
 
     }
 
+    public void sendMsg(String msg) {
+        sendQueue.add(msg);
+    }
+
+    public AtomicBoolean getOpen() {
+        return open;
+    }
+
+    public boolean setOpen(boolean open) {
+        return this.open.getAndSet(open);
+    }
 }

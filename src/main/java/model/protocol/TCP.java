@@ -11,7 +11,7 @@ public class TCP {
     private String destinationIp;
     private int destinationPort;
     //Resto do pacote
-    private int seqNumber;
+    private int seq;
     private int ack;
     private int checksum;
     private String options;
@@ -34,7 +34,7 @@ public class TCP {
         destinationIp = cabecalho.getString("dest_ip");
         destinationPort = cabecalho.getInt("dest_port");
 
-        seqNumber = json.getInt("seq");
+        seq = json.getInt("seq");
         ack = json.getInt("ack");
         checksum = json.getInt("checksum");
         options = json.getString("options");
@@ -55,11 +55,11 @@ public class TCP {
     public int getDestinationPort() {
         return destinationPort;
     }
-    public int getSeqNumber() {
-        return seqNumber;
+    public int getSeq() {
+        return seq;
     }
-    public void setSeqNumber(int seqNumber) {
-        this.seqNumber = seqNumber;
+    public void setSeq(int seqNumber) {
+        this.seq = seqNumber;
     }
     public int getAck() {
         return ack;
@@ -96,12 +96,20 @@ public class TCP {
         cabecalho.put("dest_port", destinationPort);
 
         json.put("cabecalho", cabecalho.toString());
-        json.put("seq", seqNumber);
+        json.put("seq", seq);
         json.put("ack", ack);
         json.put("checksum", checksum);
         json.put("options", options);
         json.put("data", data);
 
         return json.toString();
+    }
+    public int addSeq(){
+        seq++;
+        return seq;
+    }
+    public int addAck() {
+        ack++;
+        return ack;
     }
 }

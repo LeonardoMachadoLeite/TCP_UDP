@@ -1,6 +1,5 @@
 package model.server;
 
-import model.Protocol;
 import model.protocol.ProtocolBuilder;
 
 import java.io.IOException;
@@ -12,12 +11,12 @@ import java.util.TreeMap;
 public class Server {
 
     private ServerSocket serverSocket;
-    private TreeMap<String,ServerConnection> connections;
+    private TreeMap<String, TCPServerConnection> connections;
     private ProtocolBuilder builder;
 
     public Server(int localPort, InetAddress address, ProtocolBuilder builder) throws IOException {
         serverSocket = new ServerSocket(localPort, 10, address);
-        connections = new TreeMap<String, ServerConnection>();
+        connections = new TreeMap<String, TCPServerConnection>();
         this.builder = builder;
     }
 
@@ -25,7 +24,7 @@ public class Server {
 
         Socket socket = serverSocket.accept();
         connections.put(socket.getInetAddress().getHostAddress(),
-                new ServerConnection(socket, builder.build()));
+                new TCPServerConnection(socket, builder.build()));
 
     }
 
