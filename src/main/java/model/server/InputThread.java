@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class InputThread extends Thread {
 
-    private TCPServerConnection connection;
+    private Connection connection;
     private BufferedReader in;
     private AtomicBoolean open = new AtomicBoolean(true);
     Queue<String> receivedMsgs;
 
-    public InputThread(TCPServerConnection connection, InputStream inputStream) {
+    public InputThread(Connection connection, InputStream inputStream) {
         this.connection = connection;
         this.in = new BufferedReader(new InputStreamReader(inputStream));
         this.receivedMsgs = new ConcurrentLinkedQueue<String>();

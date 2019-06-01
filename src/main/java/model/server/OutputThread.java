@@ -9,12 +9,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class OutputThread extends Thread{
 
-    private TCPServerConnection connection;
+    private Connection connection;
     private DataOutputStream out;
     private AtomicBoolean open = new AtomicBoolean(true);
     private Queue<String> sendQueue;
 
-    public OutputThread(TCPServerConnection connection, OutputStream outputStream) {
+    public OutputThread(Connection connection, OutputStream outputStream) {
         this.connection = connection;
         this.out = new DataOutputStream(outputStream);
         this.sendQueue = new ConcurrentLinkedQueue<String>();
