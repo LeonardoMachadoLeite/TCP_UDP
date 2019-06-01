@@ -1,5 +1,7 @@
 package model.server;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -55,6 +57,17 @@ public class Connection extends Thread{
         return socket;
     }
 
+    public void sendMessage(String msg) {
+        output.sendMsg(msg);
+    }
 
+    public JSONObject getHeader() {
+        JSONObject header = new JSONObject();
+        header.put("source_id",socket.getLocalAddress().getHostName());
+        header.put("source_port",socket.getLocalPort());
+        header.put("dest_ip",socket.getInetAddress().getHostName());
+        header.put("dest_port",socket.getPort());
+        return header;
+    }
 
 }
