@@ -43,6 +43,12 @@ public class TCP {
 
 
     //Getters/Setters
+    public void setHeader(JSONObject header) {
+        sourceIp = header.getString("source_ip");
+        sourcePort = header.getInt("source_port");
+        destinationIp = header.getString("dest_ip");
+        destinationPort = header.getInt("dest_port");
+    }
     public String getSourceIp() {
         return sourceIp;
     }
@@ -83,7 +89,6 @@ public class TCP {
         this.data = data;
         this.checksum = data.hashCode();
     }
-
 
     //Metodos
     public String toString() {

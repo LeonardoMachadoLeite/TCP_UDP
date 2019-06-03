@@ -9,6 +9,7 @@ import java.util.TreeMap;
 public class Server {
 
     private ServerSocket serverSocket;
+    private ServerController controller;
     private TreeMap<String, Connection> connections;
 
     public Server(int localPort, InetAddress address) throws IOException {
@@ -20,7 +21,7 @@ public class Server {
 
         Socket socket = serverSocket.accept();
         connections.put(socket.getInetAddress().getHostAddress(),
-                new Connection(socket));
+                new Connection(socket, controller));
 
     }
 

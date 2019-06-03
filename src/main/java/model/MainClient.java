@@ -14,11 +14,11 @@ public class MainClient {
         
         InetSocketAddress serverAddress = new InetSocketAddress(ip,serverPort);
 
-        Thread client = new Thread(new Client(
-                serverAddress.getAddress(),serverPort,
-                InetAddress.getLocalHost(),clientPort, new TCP()));
+        //Thread client = new Thread(new Client(
+                //serverAddress.getAddress(),serverPort,
+                //InetAddress.getLocalHost(),clientPort, new TCP()));
 
-        client.start();
+        //client.start();
     }
 
 }

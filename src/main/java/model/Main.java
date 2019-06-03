@@ -12,11 +12,11 @@ public class Main {
         String ip = InetAddress.getLocalHost().getHostAddress();
         InetSocketAddress serverAddress = new InetSocketAddress(ip,serverPort);
 
-        Thread server = new Thread(new Server(serverPort, serverAddress.getAddress(), new TCP()));
+        //Thread server = new Thread(new Server(serverPort, serverAddress.getAddress(), new TCP()));
 
-        server.start();
+        //server.start();
 
-        server.join();
+        //server.join();
 
     }
 

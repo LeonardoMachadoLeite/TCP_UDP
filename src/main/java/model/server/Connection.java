@@ -7,12 +7,14 @@ import java.net.Socket;
 
 public class Connection extends Thread{
 
+    ServerController controller;
     private Socket socket;
     private InputThread input;
     private OutputThread output;
 
-    public Connection(Socket socket) throws IOException {
+    public Connection(Socket socket,ServerController controller) throws IOException {
         this.socket = socket;
+        this.controller = controller;
         input = new InputThread(getInstance(), socket.getInputStream());
         output = new OutputThread(getInstance(), socket.getOutputStream());
     }
@@ -38,8 +40,7 @@ public class Connection extends Thread{
             if (!input.receivedMsgs.isEmpty()) {
 
                 response = input.receivedMsgs.poll();
-
-                System.out.println(response);
+                controller.receiveJson(response, this);
 
             }
 

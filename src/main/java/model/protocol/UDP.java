@@ -20,7 +20,12 @@ public class UDP {
         this.destinationIp = destinationIp;
         this.destinationPort = destinationPort;
     }
-
+    public UDP(JSONObject header) {
+        sourceIp = header.getString("source_ip");
+        sourcePort = header.getInt("source_port");
+        destinationIp = header.getString("dest_ip");
+        destinationPort = header.getInt("dest_port");
+    }
     public UDP(String toStringJson){
         JSONObject json = new JSONObject(toStringJson);
         JSONObject cabecalho = new JSONObject(json.getString("cabecalho"));
@@ -52,47 +57,44 @@ public class UDP {
     }
 
     //Getters e Setters
+    public void setHeader(JSONObject header) {
+        sourceIp = header.getString("source_ip");
+        sourcePort = header.getInt("source_port");
+        destinationIp = header.getString("dest_ip");
+        destinationPort = header.getInt("dest_port");
+    }
     public String getSourceIp() {
         return sourceIp;
     }
-
     public void setSourceIp(String sourceIp) {
         this.sourceIp = sourceIp;
     }
-
     public int getSourcePort() {
         return sourcePort;
     }
-
     public void setSourcePort(int sourcePort) {
         this.sourcePort = sourcePort;
     }
-
     public String getDestinationIp() {
         return destinationIp;
     }
-
     public void setDestinationIp(String destinationIp) {
         this.destinationIp = destinationIp;
     }
-
     public int getDestinationPort() {
         return destinationPort;
     }
-
     public void setDestinationPort(int destinationPort) {
         this.destinationPort = destinationPort;
     }
-
     public int getChecksum() {
         return checksum;
     }
-
     public String getData() {
         return data;
     }
-
     public void setData(String data) {
         this.data = data;
+        this.checksum = data.hashCode();
     }
 }
